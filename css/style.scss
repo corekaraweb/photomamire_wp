@@ -1,0 +1,55 @@
+@charset "utf-8";
+$font-family-ja: 'Noto Sans JP', sans-serif;
+$font-size-base: 16px;
+$line-height-base: 1.7;
+$color-base: #111;
+$background-base: #961111;
+
+$breakpoints: (
+  sp: 'screen and (max-width: 1024px)',
+);
+
+@mixin mq($breakpoint: sp) {
+  @media #{map-get($breakpoints, $breakpoint)} {
+    @content;
+  }
+}
+
+button,
+input,
+optgroup,
+select,
+option,
+textarea {
+  -webkit-appearance: auto;
+  appearance: auto;
+  vertical-align: middle;
+  color: inherit;
+  font: inherit;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  border-radius: 0;
+  text-align: inherit;
+  text-transform: inherit;
+}
+select {
+  background-color: #fff;
+  color: #000;
+  option {
+    color: #000;
+  }
+}
+
+// ページ全体の設定 ==================================================================================
+body {
+  height: 100dvh;
+  width: 100%;
+  overflow: hidden;
+  z-index: 0;
+  background-color: $background-base;
+  background-image: url(../images/bodybg.png);
+  font-family: $font-family-ja;
+  line-height: $line-height-base;
+  color: $color-base;
+}
