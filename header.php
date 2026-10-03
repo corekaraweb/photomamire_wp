@@ -33,6 +33,11 @@
 </head>
 
 <body <?php body_class(); ?>>
+<?php
+	if ( function_exists( 'wp_body_open' ) ) {
+		wp_body_open();
+	}
+?>
   <header class="header">
     <div class="header_inner">
       <h1 class="title"><a href="<?php echo home_url(); ?>/">写真まみれ</a></h1>
