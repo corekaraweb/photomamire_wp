@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Cache-Control" content="no-cache">
   <link rel="icon" href="<?php echo get_template_directory_uri(); ?>/favicon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=RocknRoll+One&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=RocknRoll+One&display=swap" rel="stylesheet">
   <?php
   if (is_home()) {
     $title = get_bloginfo('name') . ' | ' . get_bloginfo('description');
@@ -26,12 +25,10 @@
     $title = '写真まみれ | 奈良を拠点に活動しているアマチュア写真家のブログです。';
   }
   ?>
-  
   <?php wp_head(); ?>
   <script src="<?php echo get_template_directory_uri() ?>/js/script.js" defer></script>
   <script async src="https://photo-mamire.jp/cgi-bin/lunalys3/analyzer/tracker.js" id="lunalys" data-site="1"></script>
 </head>
-
 <body <?php body_class(); ?>>
 <?php
 	if ( function_exists( 'wp_body_open' ) ) {
@@ -40,7 +37,7 @@
 ?>
   <header class="header">
     <div class="header_inner">
-      <h1 class="title"><a href="<?php echo home_url(); ?>/">写真まみれ</a></h1>
+      <h1 class="title"><a href="<?php echo esc_url(home_url()); ?>/">写真まみれ</a></h1>
     </div>
   </header>
   <nav class="global_nav">
@@ -50,13 +47,13 @@
     <div class="sidebar_inner">
       <h3 class="sidebar_title">メニュー</h3>
       <ul class="sidebar_menu">
-        <li><a href="<?php echo home_url(); ?>/profile/">プロフィール</a></li>
-        <li><a href="<?php echo home_url(); ?>/privacy/">プライバシーポリシー</a></li>
-        <li><a href="<?php echo home_url(); ?>/contact/">お問い合わせ</a></li>
+        <li><a href="<?php echo esc_url(home_url()); ?>/profile/">プロフィール</a></li>
+        <li><a href="<?php echo esc_url(home_url()); ?>/privacy/">プライバシーポリシー</a></li>
+        <li><a href="<?php echo esc_url(home_url()); ?>/contact/">お問い合わせ</a></li>
       </ul>
       <h3 class="sidebar_title">タグ検索</h3>
       <div class="search">
-        <form method="get" action="<?php echo home_url(); ?>/">
+        <form method="get" action="<?php echo esc_url(home_url()); ?>/">
           <input type="hidden" name="s" value="">
           <?php
           $tags = get_tags();
