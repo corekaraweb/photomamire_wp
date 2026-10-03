@@ -38,6 +38,15 @@ body {
   color: #111;
 }
 
+body.single,
+body.page,
+body.error404,
+body.search {
+  height: auto;
+  min-height: 100dvh;
+  overflow: auto;
+}
+
 .pagenavi {
   position: fixed;
   left: 90px;
@@ -113,6 +122,29 @@ body {
   margin: 0 auto 0;
   padding: 20px 0 0;
 }
+#overlay .photo_inner .close {
+  display: inline-block;
+  z-index: 100;
+  position: absolute;
+  top: 20px;
+  right: 8px;
+  font-size: 45px;
+  background: #fff;
+  line-height: 1;
+  cursor: pointer;
+}
+@media screen and (max-width: 1024px) {
+  #overlay .photo_inner .close {
+    font-size: 30px;
+    right: 5px;
+  }
+}
+#overlay .photo_inner a.single {
+  position: relative;
+  display: block;
+  width: -moz-fit-content;
+  width: fit-content;
+}
 #overlay .photo_inner img {
   display: block;
   margin: 0 auto;
@@ -137,7 +169,7 @@ body {
   display: inline-block;
 }
 #overlay .photo_inner .taglist span a {
-  display: block;
+  display: inline-block;
   border: 1px solid rgb(180, 49, 49);
   background-color: #dd6c6c;
   color: #fff;
@@ -146,16 +178,16 @@ body {
   margin-right: 5px;
   margin-bottom: 5px;
 }
-#overlay .photo_inner .taglist span a:hover {
-  background-color: #fff;
-  color: #dd6c6c;
-}
 @media screen and (max-width: 1024px) {
   #overlay .photo_inner .taglist span a {
     font-size: 11px;
     margin-right: 2px;
     margin-bottom: 2px;
   }
+}
+#overlay .photo_inner .taglist span a:hover {
+  background-color: #fff;
+  color: #dd6c6c;
 }
 
 .header {
@@ -308,7 +340,13 @@ body {
   margin: 0 auto;
 }
 
+.contents_inner .photolist .center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .contents_inner .photolist {
+  min-height: 160dvh;
   box-shadow: 0 0 16px 8px rgba(145, 14, 14, 0.8);
   background-color: rgba(200, 200, 200, 0.5);
   background-image: url(../images/filmbg.png);
@@ -416,5 +454,619 @@ body {
 @media screen and (max-width: 1024px) {
   .contents_inner .entry .entry_body p {
     font-size: 15px;
+  }
+}
+
+body.single .photolist,
+body.page .photolist,
+body.search-no-results .photolist,
+body.error404 .photolist {
+  width: 100%;
+  min-height: 100dvh;
+  position: static;
+  transform: none;
+}
+body.single .photolist .center,
+body.page .photolist .center,
+body.search-no-results .photolist .center,
+body.error404 .photolist .center {
+  align-items: start;
+}
+body.single .photolist .entry_body,
+body.page .photolist .entry_body,
+body.search-no-results .photolist .entry_body,
+body.error404 .photolist .entry_body {
+  padding: 0px 50px 100px;
+  flex: 1;
+  width: 1180px;
+}
+@media screen and (max-width: 1024px) {
+  body.single .photolist .entry_body,
+  body.page .photolist .entry_body,
+  body.search-no-results .photolist .entry_body,
+  body.error404 .photolist .entry_body {
+    padding: 0 10px 100px;
+  }
+}
+body.single .photolist .entry_body h2,
+body.page .photolist .entry_body h2,
+body.search-no-results .photolist .entry_body h2,
+body.error404 .photolist .entry_body h2 {
+  margin-top: 60px;
+  margin-bottom: 30px;
+  line-height: 1.2;
+  padding-left: 10px;
+  font-size: 40px;
+  color: #961111;
+  border-left: 10px solid #961111;
+}
+@media screen and (max-width: 1024px) {
+  body.single .photolist .entry_body h2,
+  body.page .photolist .entry_body h2,
+  body.search-no-results .photolist .entry_body h2,
+  body.error404 .photolist .entry_body h2 {
+    font-size: 24px;
+  }
+}
+body.single .photolist .entry_body .meta,
+body.page .photolist .entry_body .meta,
+body.search-no-results .photolist .entry_body .meta,
+body.error404 .photolist .entry_body .meta {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #aaa;
+  margin: 60px auto 30px;
+  padding-bottom: 5px;
+}
+body.single .photolist .entry_body .meta h2.title,
+body.page .photolist .entry_body .meta h2.title,
+body.search-no-results .photolist .entry_body .meta h2.title,
+body.error404 .photolist .entry_body .meta h2.title {
+  border: none;
+  text-align: center;
+  font-size: 22px;
+  margin: 0;
+  color: #000;
+  line-height: 1;
+}
+@media screen and (max-width: 1024px) {
+  body.single .photolist .entry_body .meta h2.title,
+  body.page .photolist .entry_body .meta h2.title,
+  body.search-no-results .photolist .entry_body .meta h2.title,
+  body.error404 .photolist .entry_body .meta h2.title {
+    font-size: 14px;
+  }
+}
+body.single .photolist .entry_body .meta .date,
+body.page .photolist .entry_body .meta .date,
+body.search-no-results .photolist .entry_body .meta .date,
+body.error404 .photolist .entry_body .meta .date {
+  font-size: 16px;
+  margin: 0;
+}
+@media screen and (max-width: 1024px) {
+  body.single .photolist .entry_body .meta .date,
+  body.page .photolist .entry_body .meta .date,
+  body.search-no-results .photolist .entry_body .meta .date,
+  body.error404 .photolist .entry_body .meta .date {
+    font-size: 11px;
+  }
+}
+body.single .photolist .entry_body .img,
+body.page .photolist .entry_body .img,
+body.search-no-results .photolist .entry_body .img,
+body.error404 .photolist .entry_body .img {
+  width: min(40vw + 100px, 900px);
+  aspect-ratio: 1/1;
+  margin: 20px auto 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+body.single .photolist .entry_body .img.landscape,
+body.page .photolist .entry_body .img.landscape,
+body.search-no-results .photolist .entry_body .img.landscape,
+body.error404 .photolist .entry_body .img.landscape {
+  display: block;
+  aspect-ratio: initial;
+}
+body.single .photolist .entry_body .img img,
+body.page .photolist .entry_body .img img,
+body.search-no-results .photolist .entry_body .img img,
+body.error404 .photolist .entry_body .img img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+  -o-object-position: center;
+     object-position: center;
+  box-sizing: border-box;
+  border: 15px solid #fff;
+  box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.4);
+}
+@media screen and (max-width: 1024px) {
+  body.single .photolist .entry_body .img img,
+  body.page .photolist .entry_body .img img,
+  body.search-no-results .photolist .entry_body .img img,
+  body.error404 .photolist .entry_body .img img {
+    border-width: 5px;
+  }
+}
+body.single .photolist .prof_info,
+body.page .photolist .prof_info,
+body.search-no-results .photolist .prof_info,
+body.error404 .photolist .prof_info {
+  display: flex;
+  justify-content: space-between;
+}
+@media screen and (max-width: 1024px) {
+  body.single .photolist .prof_info,
+  body.page .photolist .prof_info,
+  body.search-no-results .photolist .prof_info,
+  body.error404 .photolist .prof_info {
+    display: block;
+    padding: 20px;
+  }
+}
+body.single .photolist .prof_info table,
+body.page .photolist .prof_info table,
+body.search-no-results .photolist .prof_info table,
+body.error404 .photolist .prof_info table {
+  font-size: 20px;
+  width: 38%;
+}
+@media screen and (max-width: 1024px) {
+  body.single .photolist .prof_info table,
+  body.page .photolist .prof_info table,
+  body.search-no-results .photolist .prof_info table,
+  body.error404 .photolist .prof_info table {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}
+body.single .photolist .prof_info table tr,
+body.page .photolist .prof_info table tr,
+body.search-no-results .photolist .prof_info table tr,
+body.error404 .photolist .prof_info table tr {
+  border-bottom: 1px solid #aaa;
+}
+body.single .photolist .prof_info table td,
+body.page .photolist .prof_info table td,
+body.search-no-results .photolist .prof_info table td,
+body.error404 .photolist .prof_info table td {
+  padding: 10px;
+}
+body.single .photolist .prof_info table th,
+body.page .photolist .prof_info table th,
+body.search-no-results .photolist .prof_info table th,
+body.error404 .photolist .prof_info table th {
+  padding: 10px;
+  width: 100px;
+}
+body.single .photolist .prof_info .txt,
+body.page .photolist .prof_info .txt,
+body.search-no-results .photolist .prof_info .txt,
+body.error404 .photolist .prof_info .txt {
+  width: 62%;
+  padding: 0 10px 0 40px;
+}
+@media screen and (max-width: 1024px) {
+  body.single .photolist .prof_info .txt,
+  body.page .photolist .prof_info .txt,
+  body.search-no-results .photolist .prof_info .txt,
+  body.error404 .photolist .prof_info .txt {
+    width: 100%;
+    padding: 0;
+  }
+}
+body.single .photolist .prof_info .txt p,
+body.page .photolist .prof_info .txt p,
+body.search-no-results .photolist .prof_info .txt p,
+body.error404 .photolist .prof_info .txt p {
+  font-size: 18px;
+}
+body.single .photolist .camera_info,
+body.page .photolist .camera_info,
+body.search-no-results .photolist .camera_info,
+body.error404 .photolist .camera_info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+@media screen and (max-width: 1024px) {
+  body.single .photolist .camera_info,
+  body.page .photolist .camera_info,
+  body.search-no-results .photolist .camera_info,
+  body.error404 .photolist .camera_info {
+    display: block;
+  }
+}
+body.single .photolist .camera_info .camera,
+body.page .photolist .camera_info .camera,
+body.search-no-results .photolist .camera_info .camera,
+body.error404 .photolist .camera_info .camera {
+  width: 40%;
+  padding: 20px;
+}
+@media screen and (max-width: 1024px) {
+  body.single .photolist .camera_info .camera,
+  body.page .photolist .camera_info .camera,
+  body.search-no-results .photolist .camera_info .camera,
+  body.error404 .photolist .camera_info .camera {
+    width: 100%;
+  }
+}
+body.single .photolist .camera_info .camera img,
+body.page .photolist .camera_info .camera img,
+body.search-no-results .photolist .camera_info .camera img,
+body.error404 .photolist .camera_info .camera img {
+  width: 100%;
+  height: auto;
+}
+body.single .photolist .camera_info .txt,
+body.page .photolist .camera_info .txt,
+body.search-no-results .photolist .camera_info .txt,
+body.error404 .photolist .camera_info .txt {
+  width: 60%;
+  padding: 20px;
+}
+@media screen and (max-width: 1024px) {
+  body.single .photolist .camera_info .txt,
+  body.page .photolist .camera_info .txt,
+  body.search-no-results .photolist .camera_info .txt,
+  body.error404 .photolist .camera_info .txt {
+    width: 100%;
+  }
+}
+body.single .photolist h3,
+body.page .photolist h3,
+body.search-no-results .photolist h3,
+body.error404 .photolist h3 {
+  font-size: 30px;
+  border-bottom: 3px solid #000;
+  margin-bottom: 30px;
+}
+@media screen and (max-width: 1024px) {
+  body.single .photolist h3,
+  body.page .photolist h3,
+  body.search-no-results .photolist h3,
+  body.error404 .photolist h3 {
+    font-size: 20px;
+  }
+}
+body.single .photolist p,
+body.page .photolist p,
+body.search-no-results .photolist p,
+body.error404 .photolist p {
+  margin-bottom: 1.5em;
+  font-size: 16px;
+}
+body.single .photolist ul,
+body.page .photolist ul,
+body.search-no-results .photolist ul,
+body.error404 .photolist ul {
+  margin-left: 40px;
+  margin-bottom: 50px;
+}
+body.single .photolist ul li,
+body.page .photolist ul li,
+body.search-no-results .photolist ul li,
+body.error404 .photolist ul li {
+  list-style-type: disc;
+}
+body.single .photolist .photo_detail,
+body.page .photolist .photo_detail,
+body.search-no-results .photolist .photo_detail,
+body.error404 .photolist .photo_detail {
+  display: flex;
+  justify-content: space-between;
+}
+@media screen and (max-width: 1024px) {
+  body.single .photolist .photo_detail,
+  body.page .photolist .photo_detail,
+  body.search-no-results .photolist .photo_detail,
+  body.error404 .photolist .photo_detail {
+    display: block;
+  }
+}
+body.single .photolist .photo_info,
+body.page .photolist .photo_info,
+body.search-no-results .photolist .photo_info,
+body.error404 .photolist .photo_info {
+  width: 50%;
+}
+@media screen and (max-width: 1024px) {
+  body.single .photolist .photo_info,
+  body.page .photolist .photo_info,
+  body.search-no-results .photolist .photo_info,
+  body.error404 .photolist .photo_info {
+    width: 100%;
+  }
+}
+body.single .photolist .photo_info table,
+body.page .photolist .photo_info table,
+body.search-no-results .photolist .photo_info table,
+body.error404 .photolist .photo_info table {
+  width: 95%;
+}
+@media screen and (max-width: 1024px) {
+  body.single .photolist .photo_info table,
+  body.page .photolist .photo_info table,
+  body.search-no-results .photolist .photo_info table,
+  body.error404 .photolist .photo_info table {
+    font-size: 13px;
+  }
+}
+body.single .photolist .photo_info table tr,
+body.page .photolist .photo_info table tr,
+body.search-no-results .photolist .photo_info table tr,
+body.error404 .photolist .photo_info table tr {
+  border-bottom: 1px solid #ccc;
+}
+body.single .photolist .photo_info table th,
+body.page .photolist .photo_info table th,
+body.search-no-results .photolist .photo_info table th,
+body.error404 .photolist .photo_info table th {
+  width: 200px;
+  padding: 10px;
+}
+@media screen and (max-width: 1024px) {
+  body.single .photolist .photo_info table th,
+  body.page .photolist .photo_info table th,
+  body.search-no-results .photolist .photo_info table th,
+  body.error404 .photolist .photo_info table th {
+    width: 150px;
+    padding: 5px;
+  }
+}
+body.single .photolist .photo_info table td,
+body.page .photolist .photo_info table td,
+body.search-no-results .photolist .photo_info table td,
+body.error404 .photolist .photo_info table td {
+  padding: 10px;
+}
+@media screen and (max-width: 1024px) {
+  body.single .photolist .photo_info table td,
+  body.page .photolist .photo_info table td,
+  body.search-no-results .photolist .photo_info table td,
+  body.error404 .photolist .photo_info table td {
+    padding: 5px;
+  }
+}
+body.single .photolist .photo_comment,
+body.page .photolist .photo_comment,
+body.search-no-results .photolist .photo_comment,
+body.error404 .photolist .photo_comment {
+  width: 50%;
+}
+@media screen and (max-width: 1024px) {
+  body.single .photolist .photo_comment,
+  body.page .photolist .photo_comment,
+  body.search-no-results .photolist .photo_comment,
+  body.error404 .photolist .photo_comment {
+    width: 100%;
+  }
+}
+body.single .photolist .contact_form input,
+body.single .photolist .contact_form textarea,
+body.page .photolist .contact_form input,
+body.page .photolist .contact_form textarea,
+body.search-no-results .photolist .contact_form input,
+body.search-no-results .photolist .contact_form textarea,
+body.error404 .photolist .contact_form input,
+body.error404 .photolist .contact_form textarea {
+  padding: 10px;
+  caret-color: black;
+  border: 1px solid #333;
+  background-color: #fff;
+  width: 50%;
+}
+body.single .photolist .contact_form textarea,
+body.page .photolist .contact_form textarea,
+body.search-no-results .photolist .contact_form textarea,
+body.error404 .photolist .contact_form textarea {
+  width: 100%;
+}
+body.single .photolist .contact_form input[type=checkbox],
+body.page .photolist .contact_form input[type=checkbox],
+body.search-no-results .photolist .contact_form input[type=checkbox],
+body.error404 .photolist .contact_form input[type=checkbox] {
+  width: auto;
+}
+body.single .photolist .contact_form input[type=submit],
+body.page .photolist .contact_form input[type=submit],
+body.search-no-results .photolist .contact_form input[type=submit],
+body.error404 .photolist .contact_form input[type=submit] {
+  padding: 10px 30px;
+  font-size: 18px;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+body.single .photolist .contact_form input[disabled],
+body.page .photolist .contact_form input[disabled],
+body.search-no-results .photolist .contact_form input[disabled],
+body.error404 .photolist .contact_form input[disabled] {
+  background-color: #afafaf;
+  color: #ccc;
+}
+body.single .photolist .contact_form p.confirm,
+body.page .photolist .contact_form p.confirm,
+body.search-no-results .photolist .contact_form p.confirm,
+body.error404 .photolist .contact_form p.confirm {
+  padding: 10px 10px 10px 0;
+}
+body.single .photolist .contact_form p.confirm input[type=checkbox],
+body.page .photolist .contact_form p.confirm input[type=checkbox],
+body.search-no-results .photolist .contact_form p.confirm input[type=checkbox],
+body.error404 .photolist .contact_form p.confirm input[type=checkbox] {
+  zoom: 2;
+}
+@media screen and (max-width: 1024px) {
+  body.single .photolist .contact_form p.confirm input[type=checkbox],
+  body.page .photolist .contact_form p.confirm input[type=checkbox],
+  body.search-no-results .photolist .contact_form p.confirm input[type=checkbox],
+  body.error404 .photolist .contact_form p.confirm input[type=checkbox] {
+    zoom: 1;
+  }
+}
+body.single .recent_entries,
+body.page .recent_entries,
+body.search-no-results .recent_entries,
+body.error404 .recent_entries {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+}
+body.single .recent_entries .recent,
+body.page .recent_entries .recent,
+body.search-no-results .recent_entries .recent,
+body.error404 .recent_entries .recent {
+  width: 100%;
+  height: auto;
+}
+body.single .recent_entries .recent a,
+body.page .recent_entries .recent a,
+body.search-no-results .recent_entries .recent a,
+body.error404 .recent_entries .recent a {
+  overflow: hidden;
+  display: block;
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
+  border: 15px solid #fff;
+  box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.4);
+}
+body.single .recent_entries .recent a img,
+body.page .recent_entries .recent a img,
+body.search-no-results .recent_entries .recent a img,
+body.error404 .recent_entries .recent a img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1/1;
+  -o-object-fit: cover;
+     object-fit: cover;
+  transition: 0.5s;
+}
+body.single .recent_entries .recent a:hover img,
+body.page .recent_entries .recent a:hover img,
+body.search-no-results .recent_entries .recent a:hover img,
+body.error404 .recent_entries .recent a:hover img {
+  transform: scale(1.4);
+}
+body.single .notfound .txtBlock li,
+body.page .notfound .txtBlock li,
+body.search-no-results .notfound .txtBlock li,
+body.error404 .notfound .txtBlock li {
+  margin-bottom: 10px;
+}
+body.single .notfound .txtBlock a,
+body.page .notfound .txtBlock a,
+body.search-no-results .notfound .txtBlock a,
+body.error404 .notfound .txtBlock a {
+  text-decoration: underline;
+  font-size: 20px;
+}
+body.single .condition span,
+body.page .condition span,
+body.search-no-results .condition span,
+body.error404 .condition span {
+  display: inline-block;
+  border: 1px solid rgb(180, 49, 49);
+  background-color: #dd6c6c;
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+@media screen and (max-width: 1024px) {
+  body.single .condition span,
+  body.page .condition span,
+  body.search-no-results .condition span,
+  body.error404 .condition span {
+    font-size: 11px;
+    margin-right: 2px;
+    margin-bottom: 2px;
+  }
+}
+body.single .search,
+body.page .search,
+body.search-no-results .search,
+body.error404 .search {
+  margin-bottom: 100px;
+}
+body.single .search button,
+body.page .search button,
+body.search-no-results .search button,
+body.error404 .search button {
+  color: #fff;
+  margin-top: 10px;
+  width: auto;
+  display: inline-block;
+  padding: 10px 50px;
+  font-size: 16px;
+  border: 2px solid #dd6c6c;
+  background-color: #961111;
+  text-align: center;
+}
+body.single .search label,
+body.page .search label,
+body.search-no-results .search label,
+body.error404 .search label {
+  vertical-align: middle;
+  font-size: 15px;
+  margin-right: 15px;
+  display: inline-block;
+}
+body.single .search input,
+body.page .search input,
+body.search-no-results .search input,
+body.error404 .search input {
+  transform: scale(1.3);
+  margin-right: 7px;
+}
+body.single .search p,
+body.page .search p,
+body.search-no-results .search p,
+body.error404 .search p {
+  margin-top: 10px;
+  vertical-align: middle;
+}
+body.single .search p span,
+body.page .search p span,
+body.search-no-results .search p span,
+body.error404 .search p span {
+  position: relative;
+}
+body.single::before,
+body.page::before,
+body.search-no-results::before,
+body.error404::before {
+  width: 80px;
+}
+@media screen and (max-width: 1024px) {
+  body.single::before,
+  body.page::before,
+  body.search-no-results::before,
+  body.error404::before {
+    width: 20px;
+  }
+}
+body.single::after,
+body.page::after,
+body.search-no-results::after,
+body.error404::after {
+  width: 80px;
+}
+@media screen and (max-width: 1024px) {
+  body.single::after,
+  body.page::after,
+  body.search-no-results::after,
+  body.error404::after {
+    width: 20px;
   }
 }/*# sourceMappingURL=style.css.map */

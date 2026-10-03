@@ -7,11 +7,29 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Cache-Control" content="no-cache">
   <link rel="icon" href="<?php echo get_template_directory_uri(); ?>/favicon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=RocknRoll+One&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=RocknRoll+One&display=swap" rel="stylesheet">
+  <?php
+  if (is_home()) {
+    $title = get_bloginfo('name') . ' | ' . get_bloginfo('description');
+  } elseif (is_search()) {
+    $title = '検索結果：' . get_bloginfo('name');
+  } elseif (is_single()) {
+    $title = get_the_title() . '：' . get_bloginfo('name');
+  } else if (is_tag()) {
+    $posttags = get_the_tags();
+    $title = 'タグ ' . $posttags[0]->name . '：' . get_bloginfo('name');
+  } else if (is_single() || is_page()) {
+    $title = get_the_title() . "：" . get_bloginfo('name');
+  } else {
+    $title = '写真まみれ | 奈良を拠点に活動しているアマチュア写真家のブログです。';
+  }
+  ?>
+  
   <?php wp_head(); ?>
   <script src="<?php echo get_template_directory_uri() ?>/js/script.js" defer></script>
+  <script async src="https://photo-mamire.jp/cgi-bin/lunalys3/analyzer/tracker.js" id="lunalys" data-site="1"></script>
 </head>
 
 <body <?php body_class(); ?>>
@@ -43,6 +61,7 @@
             echo '<div id="tag-checkbox-group">';
             foreach ($tags as $tag) {
               $checked = '';
+              // タグ
               if (is_tag()) {
                 $posttags = get_the_tags();
                 if ($tag->slug == $posttags[0]->slug) {

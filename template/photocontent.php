@@ -4,6 +4,9 @@ $taghtml = '';
 $postid = get_the_ID();
 if (has_post_thumbnail()) {
   $thumbnail_url = get_the_post_thumbnail_url($postid, 'custom-2000x2000');
+  //$thumbnail_url = get_template_directory_uri(  ) . '/images/default_noimage.png';
+} else {
+  $thumbnail_url = get_template_directory_uri() . '/images/default_noimage.png';
 }
 $tags = get_the_tags($postid);
 if ($tags) {

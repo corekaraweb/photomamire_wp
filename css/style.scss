@@ -1,12 +1,12 @@
 @charset "utf-8";
-$font-family-ja: 'Noto Sans JP', sans-serif;
+$font-family-ja: "Noto Sans JP", sans-serif;
 $font-size-base: 16px;
 $line-height-base: 1.7;
 $color-base: #111;
 $background-base: #961111;
 
 $breakpoints: (
-  sp: 'screen and (max-width: 1024px)',
+  sp: "screen and (max-width: 1024px)",
 );
 
 @mixin mq($breakpoint: sp) {
@@ -15,6 +15,21 @@ $breakpoints: (
   }
 }
 
+@mixin tagbtn {
+  display: inline-block;
+  border: 1px solid rgb(180, 49, 49);
+  background-color: #dd6c6c;
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  @include mq(sp) {
+    font-size: 11px;
+    margin-right: 2px;
+    margin-bottom: 2px;
+  }
+}
 button,
 input,
 optgroup,
@@ -40,7 +55,6 @@ select {
     color: #000;
   }
 }
-
 // ページ全体の設定 ==================================================================================
 body {
   height: 100dvh;
@@ -52,6 +66,15 @@ body {
   font-family: $font-family-ja;
   line-height: $line-height-base;
   color: $color-base;
+}
+
+body.single,
+body.page,
+body.error404,
+body.search {
+  height: auto;
+  min-height: 100dvh;
+  overflow: auto;
 }
 
 .pagenavi {
@@ -98,7 +121,6 @@ body {
     }
   }
 }
-
 // サムネイルクリック時のオーバーレイ ==================================================================================
 #overlay {
   position: fixed;
@@ -122,6 +144,26 @@ body {
     position: relative;
     margin: 0 auto 0;
     padding: 20px 0 0;
+    .close {
+      display: inline-block;
+      z-index: 100;
+      position: absolute;
+      top: 20px;
+      right: 8px;
+      font-size: 45px;
+      background: #fff;
+      line-height: 1;
+      cursor: pointer;
+      @include mq(sp) {
+        font-size: 30px;
+        right: 5px;
+      }
+    }
+    a.single {
+      position: relative;
+      display: block;
+      width: fit-content;
+    }
     img {
       display: block;
       margin: 0 auto;
@@ -141,22 +183,10 @@ body {
       span {
         display: inline-block;
         a {
-          display: block;
-          border: 1px solid rgb(180, 49, 49);
-          background-color: #dd6c6c;
-          color: #fff;
-          padding: 2px 8px;
-          border-radius: 9999px;
-          margin-right: 5px;
-          margin-bottom: 5px;
+          @include tagbtn();
           &:hover {
             background-color: #fff;
             color: #dd6c6c;
-          }
-          @include mq(sp) {
-            font-size: 11px;
-            margin-right: 2px;
-            margin-bottom: 2px;
           }
         }
       }
@@ -181,7 +211,7 @@ body {
   .title {
     line-height: 1;
     padding: 10px;
-    font-family: 'RocknRoll One', sans-serif;
+    font-family: "RocknRoll One", sans-serif;
     border: 5px solid #000;
     @include mq(sp) {
       font-size: 20px;
@@ -306,6 +336,12 @@ body {
 }
 .contents_inner {
   .photolist {
+    .center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    min-height: 160dvh;
     box-shadow: 0 0 16px 8px rgba(145, 14, 14, 0.8);
     background-color: rgba(200, 200, 200, 0.5);
     background-image: url(../images/filmbg.png);
@@ -323,7 +359,7 @@ body {
       width: 100%;
     }
     &::before {
-      content: '';
+      content: "";
       display: block;
       width: 80px;
       background-image: url(../images/filmborder.png);
@@ -334,7 +370,7 @@ body {
       }
     }
     &::after {
-      content: '';
+      content: "";
       display: block;
       width: 80px;
       background-image: url(../images/filmborder.png);
@@ -400,6 +436,343 @@ body {
           font-size: 15px;
         }
       }
+    }
+  }
+}
+
+// 固定ページ・投稿ページ・404ページ
+body.single,
+body.page,
+body.search-no-results,
+body.error404 {
+  .photolist {
+    width: 100%;
+    min-height: 100dvh;
+    position: static;
+    transform: none;
+    .center {
+      align-items: start;
+    }
+    .entry_body {
+      padding: 0px 50px 100px;
+      flex: 1;
+      width: 1180px;
+      @include mq(sp) {
+        padding: 0 10px 100px;
+      }
+      h2 {
+        margin-top: 60px;
+        margin-bottom: 30px;
+        line-height: 1.2;
+        padding-left: 10px;
+        font-size: 40px;
+        color: $background-base;
+        border-left: 10px solid $background-base;
+        @include mq(sp) {
+          font-size: 24px;
+        }
+      }
+      .meta {
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid #aaa;
+        margin: 60px auto 30px;
+        padding-bottom: 5px;
+        h2.title {
+          border: none;
+          text-align: center;
+          font-size: 22px;
+          margin: 0;
+          color: #000;
+          line-height: 1;
+          @include mq(sp) {
+            font-size: 14px;
+          }
+        }
+        .date {
+          font-size: 16px;
+          margin: 0;
+          @include mq(sp) {
+            font-size: 11px;
+          }
+        }
+      }
+
+      .img {
+        width: min(calc(40vw + 100px), 900px);
+        aspect-ratio: 1 / 1;
+        margin: 20px auto 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &.landscape {
+          display: block;
+          aspect-ratio: initial;
+        }
+        img {
+          display: block;
+          width: auto;
+          height: auto;
+          max-width: 100%;
+          max-height: 100%;
+          object-fit: contain;
+          object-position: center;
+          box-sizing: border-box;
+          border: 15px solid #fff;
+          box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.4);
+          @include mq(sp) {
+            border-width: 5px;
+          }
+        }
+      }
+    }
+    .prof_info {
+      display: flex;
+      justify-content: space-between;
+      @include mq(sp) {
+        display: block;
+        padding: 20px;
+      }
+      table {
+        font-size: 20px;
+        width: 38%;
+        @include mq(sp) {
+          width: 100%;
+          margin-bottom: 20px;
+        }
+        tr {
+          border-bottom: 1px solid #aaa;
+        }
+        td {
+          padding: 10px;
+        }
+        th {
+          padding: 10px;
+          width: 100px;
+        }
+      }
+      .txt {
+        width: 62%;
+        padding: 0 10px 0 40px;
+        @include mq(sp) {
+          width: 100%;
+          padding: 0;
+        }
+        p {
+          font-size: 18px;
+        }
+      }
+    }
+    .camera_info {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      @include mq(sp) {
+        display: block;
+      }
+      .camera {
+        width: 40%;
+        padding: 20px;
+        @include mq(sp) {
+          width: 100%;
+        }
+        img {
+          width: 100%;
+          height: auto;
+        }
+      }
+      .txt {
+        width: 60%;
+        padding: 20px;
+        @include mq(sp) {
+          width: 100%;
+        }
+      }
+    }
+    h3 {
+      font-size: 30px;
+      border-bottom: 3px solid #000;
+      margin-bottom: 30px;
+      @include mq(sp) {
+        font-size: 20px;
+      }
+    }
+    p {
+      margin-bottom: 1.5em;
+      font-size: 16px;
+    }
+    ul {
+      margin-left: 40px;
+      margin-bottom: 50px;
+      li {
+        list-style-type: disc;
+      }
+    }
+    .photo_detail {
+      display: flex;
+      justify-content: space-between;
+      @include mq(sp) {
+        display: block;
+      }
+    }
+    .photo_info {
+      width: 50%;
+      @include mq(sp) {
+        width: 100%;
+      }
+      table {
+        width: 95%;
+        @include mq(sp) {
+          font-size: 13px;
+        }
+        tr {
+          border-bottom: 1px solid #ccc;
+        }
+        th {
+          width: 200px;
+          padding: 10px;
+          @include mq(sp) {
+            width: 150px;
+            padding: 5px;
+          }
+        }
+        td {
+          padding: 10px;
+          @include mq(sp) {
+            padding: 5px;
+          }
+        }
+      }
+    }
+    .photo_comment {
+      width: 50%;
+      @include mq(sp) {
+        width: 100%;
+      }
+    }
+    .contact_form {
+      input,
+      textarea {
+        padding: 10px;
+        caret-color: black;
+        border: 1px solid #333;
+        background-color: #fff;
+        width: 50%;
+      }
+      textarea {
+        width: 100%;
+      }
+      input[type="checkbox"] {
+        width: auto;
+      }
+      input[type="submit"] {
+        padding: 10px 30px;
+        font-size: 18px;
+        width: fit-content;
+      }
+      input[disabled] {
+        background-color: #afafaf;
+        color: #ccc;
+      }
+      p.confirm {
+        padding: 10px 10px 10px 0;
+        input[type="checkbox"] {
+          zoom: 2;
+          @include mq(sp) {
+            zoom: 1;
+          }
+        }
+      }
+    }
+  }
+  .recent_entries {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    .recent {
+      width: 100%;
+      height: auto;
+      a {
+        overflow: hidden;
+        display: block;
+        width: 100%;
+        height: auto;
+        box-sizing: border-box;
+        border: 15px solid #fff;
+        box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.4);
+        img {
+          width: 100%;
+          height: auto;
+          aspect-ratio: 1/1;
+          object-fit: cover;
+          transition: 0.5s;
+        }
+        &:hover {
+          img {
+            transform: scale(1.4);
+          }
+        }
+      }
+    }
+  }
+  .notfound {
+    .txtBlock {
+      li {
+        margin-bottom: 10px;
+      }
+      a {
+        text-decoration: underline;
+        font-size: 20px;
+      }
+    }
+  }
+  .condition {
+    span {
+      @include tagbtn();
+    }
+  }
+  .search {
+    margin-bottom: 100px;
+    button {
+      color: #fff;
+      margin-top: 10px;
+      width: auto;
+      display: inline-block;
+      padding: 10px 50px;
+      font-size: 16px;
+      border: 2px solid #dd6c6c;
+      background-color: $background-base;
+      text-align: center;
+    }
+    label {
+      vertical-align: middle;
+      font-size: 15px;
+      margin-right: 15px;
+      display: inline-block;
+    }
+    input {
+      transform: scale(1.3);
+      margin-right: 7px;
+    }
+    p {
+      margin-top: 10px;
+      vertical-align: middle;
+      span {
+        position: relative;
+      }
+    }
+  }
+  &::before {
+    width: 80px;
+    @include mq(sp) {
+      width: 20px;
+    }
+  }
+  &::after {
+    width: 80px;
+    @include mq(sp) {
+      width: 20px;
     }
   }
 }
