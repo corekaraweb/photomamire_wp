@@ -122,7 +122,7 @@
                     </table>
                   </div>
                   <div class="photo_comment">
-                    <h2>コメント</h2>
+                    <h2>AIコメント</h2>
                     <?php 
                     $thumbnail_description = get_post( $thumbnail_id )->post_content;
                     echo $thumbnail_description;
