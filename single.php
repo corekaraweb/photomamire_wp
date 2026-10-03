@@ -3,7 +3,7 @@
   <div class="container">
     <div class="contents">
       <div class="contents_inner">
-        <div class="photolist single">
+        <div <?php post_class('photolist single'); ?>>
           <div class="entry_body">
             <?php
             $thumbnail_url = '';
@@ -39,7 +39,6 @@
                   }
                 } ?>
                 <?php
-
                 $exif = exif_read_data($full_url, 'IFD0', true);
                 $exif_model = '不明';
                 $exif_date = '不明';
@@ -77,7 +76,6 @@
                 if (isset($exif["EXIF"]["FocalLengthIn35mmFilm"])) { //配列キーに値が存在するか確認します
                   $exif_shyouten = $exif["EXIF"]["FocalLengthIn35mmFilm"] . ' mm'; // 焦点距離
                 }
-
                 ?>
                 <div class="photo_detail">
                   <div class="photo_info">
