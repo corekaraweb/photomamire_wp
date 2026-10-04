@@ -1,14 +1,11 @@
 # 写真まみれ
 
-<!-- バッジ：shields.io / style=for-the-badge で統一。バージョンはリポジトリ内に宣言がないため付けない -->
 ![PHP](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 ![Sass](https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=sass&logoColor=white)
 ![WordPress](https://img.shields.io/badge/WordPress-21759B?style=for-the-badge&logo=wordpress&logoColor=white)
 
 > 奈良を拠点にする写真ブログ向けのオリジナル WordPress テーマ
-
-TODO: スクリーンショット（`docs/screenshot.png` は未配置）
 
 ## 📖 概要
 
@@ -39,16 +36,16 @@ WordPress 本体、データベース、アップロード済みの写真はリ�
 
 依存関係ファイルは無し。下表はソースと `style.css` から確認できたもの。
 
-| 分類 | 技術 |
-|---|---|
-| 言語 | PHP（バージョン宣言なし）、JavaScript（フレームワークなし）、Sass（`css/style.scss`） |
-| フレームワーク / CMS | WordPress クラシックテーマ（対応バージョンの宣言なし。テーマ Version は 1.0） |
-| CSS | 読み込みは `css/reset.css`（destyle.css v4.0.1）と `css/style.css`。後者のクエリに `rand()` を付与 |
-| フォント | Google Fonts の Noto Sans JP、RocknRoll One（`header.php`） |
-| ページ送り | `footer.php` が `function_exists('wp_pagenavi')` のときだけ `wp_pagenavi()` を呼ぶ。プラグインの宣言ファイルは無し |
-| DB | 該当なし（テーマ内に接続設定なし） |
-| パッケージ管理 | 該当なし |
-| お問い合わせフォーム | 該当なし（`page-contact.php` は案内文のあと `the_content()`。フォームプラグインの指定は無し） |
+| 分類                 | 技術                                                                                                               |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| 言語                 | PHP（バージョン宣言なし）、JavaScript（フレームワークなし）、Sass（`css/style.scss`）                              |
+| フレームワーク / CMS | WordPress クラシックテーマ（対応バージョンの宣言なし。テーマ Version は 1.0）                                      |
+| CSS                  | 読み込みは `css/reset.css`（destyle.css v4.0.1）と `css/style.css`。後者のクエリに `rand()` を付与                 |
+| フォント             | Google Fonts の Noto Sans JP、RocknRoll One（`header.php`）                                                        |
+| ページ送り           | `footer.php` が `function_exists('wp_pagenavi')` のときだけ `wp_pagenavi()` を呼ぶ。プラグインの宣言ファイルは無し |
+| DB                   | 該当なし（テーマ内に接続設定なし）                                                                                 |
+| パッケージ管理       | 該当なし                                                                                                           |
+| お問い合わせフォーム | 該当なし（`page-contact.php` は案内文のあと `the_content()`。フォームプラグインの指定は無し）                      |
 
 ## 🚀 セットアップ
 
