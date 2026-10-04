@@ -1,259 +1,114 @@
-# 写真まみれ（photomamire_wp）
+# 写真まみれ
 
-奈良を拠点に活動するアマチュア写真家の写真ブログ「[写真まみれ](https://photo-mamire.jp/)」のオリジナルの WordPress テーマです。
-<br><br>
-投稿された写真を、フィルムを斜めに流すような一覧として見せ、ホイール・キーボード・スワイプで慣性スクロールできるようにしています。サムネイルをクリックするとライトボックスが開き、ライトボックス上でさらにクリックすると個別ページが開きます。
-個別ページでは画像ファイル全体と撮影情報を読み出して表示します。<br>
-<br>
-また、左下のアイコンをクリックすると、写真に付けられたタグを指定した検索が事項できます。
-<br><br>
-このリポジトリはテーマ単体です。WordPress 本体、データベース、アップロード済みの写真は含みません。
+<!-- バッジ：shields.io / style=for-the-badge で統一。バージョンはリポジトリ内に宣言がないため付けない -->
+![PHP](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![Sass](https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=sass&logoColor=white)
+![WordPress](https://img.shields.io/badge/WordPress-21759B?style=for-the-badge&logo=wordpress&logoColor=white)
 
-## このテーマで担当したこと
+> 奈良を拠点にする写真ブログ向けのオリジナル WordPress テーマ
 
-既存テーマの子テーマではなく、テンプレート・スタイル・フロントの挙動を一から組み立てています。
+TODO: スクリーンショット（`docs/screenshot.png` は未配置）
 
-- フィルムストリップを模した一覧レイアウトと、その上で動く慣性スクロール
-- サムネイルから開くライトボックス（タイトル・タグ・個別ページへの導線）
-- タグの複数選択と AND / OR 条件による絞り込み
-- 個別ページでの EXIF 読み取りと、横位置・縦位置に応じた写真の見せ方
-- プロフィール、お問い合わせ、プライバシーポリシー、404、検索0件の各画面
-- 管理画面の投稿一覧にアイキャッチ列を追加し、運用時に写真の有無を確認しやすくしたこと
+## 📖 概要
 
-## デモ
+写真投稿をフィルム状の一覧で見せるクラシックテーマ。テーマ名は `style.css` の `Theme Name: 写真まみれ`、テーマバージョンは `1.0`。
 
-公開サイト: [https://photo-mamire.jp/](https://photo-mamire.jp/)
+WordPress 本体、データベース、アップロード済みの写真はリポジトリに含まない。`composer.json` と `package.json` は無し。
 
-| 画面 | パスの例 | 役割 |
-| --- | --- | --- |
-| トップ（写真一覧） | `/` | フィルム状の一覧。1ページ 24 枚 |
-| タグ検索結果 | `/?s=&filter_tag[]=slug&condition=or` | チェックしたタグで絞り込み |
-| タグアーカイブ | `/tag/スラッグ/` | 単一タグの一覧 |
-| 写真の個別ページ | `/投稿スラッグ/` | 大きな写真、EXIF、コメント |
-| プロフィール | `/profile/` | 自己紹介と使用機材 |
-| お問い合わせ | `/contact/` | 案内文とフォーム（本文は固定ページ側） |
-| プライバシーポリシー | `/privacy/` | 個人情報・肖像・著作権の方針 |
-| 404 | 存在しない URL | 案内と最新写真 6 件 |
+公開ドメインは `header.php` のアクセス解析タグが参照する `https://photo-mamire.jp/`。
 
-## 技術スタック
+## ✨ 主な機能
 
-| 区分 | 採用したもの |
-| --- | --- |
-| CMS | WordPress（クラシックテーマ。ブロックテーマではない） |
-| サーバー側 | PHP。テンプレート階層、`WP_Query`、`pre_get_posts`、画像サイズ、EXIF |
-| スタイル | Sass（`css/style.scss`）をコンパイルした CSS。リセットは `css/reset.css` |
-| フロント | フレームワークなしの JavaScript（`js/script.js`）。Web Animations API と `requestAnimationFrame` |
-| 書体 | [Noto Sans JP](https://fonts.google.com/noto/specimen/Noto+Sans+JP)、[RocknRoll One](https://fonts.google.com/specimen/RocknRoll+One) |
-| ページ送り | [WP-PageNavi](https://ja.wordpress.org/plugins/wp-pagenavi/) |
-| お問い合わせ | 固定ページの本文としてフォームを出力する想定（テーマ側は案内文と `.contact_form` の見た目） |
+- トップのフィルム風一覧。2カラム、帯を -15 度回転。1024px 以下は 1 カラム（`css/style.scss`）
+- ホイール、矢印キー、縦スワイプを同じ慣性処理に渡す一覧スクロール（`js/script.js`）
+- サムネイルのフェードイン（Web Animations API）と、クリック時のライトボックス
+- タグの複数選択。`condition=or` は `tag_slug__in`、それ以外は `tag_slug__and`（`functions.php` の `pre_get_posts`）
+- 1ページ 24 件（`$POSTPERPAGE`）。件数とページ送りは `footer.php`
+- 検索 0 件は条件の再表示と最新 6 件（`template/nosearchcontent.php`）
+- 個別ページでアイキャッチ JPEG の EXIF を表示（`single.php` の `exif_read_data()`）
+- 横長・縦長で写真レイアウトを分岐（`getimagesize()`）
+- 個別ページのコメントは、投稿本文ではなくアイキャッチ添付ファイルの `post_content`
+- アイキャッチ未設定時は `images/default_noimage.png`
+- 生成サイズは `custom-360x360`（クロップあり）と `custom-2000x2000`（比率維持）。標準の thumbnail / medium / large などは停止（`functions.php`）
+- 管理画面の投稿一覧にアイキャッチ列を追加
+- 固定ページはプロフィール、お問い合わせ、プライバシーポリシー。404 は案内と最新 6 件
+- サイドバーは左下ボタンで開閉。メニューとタグ検索フォーム
 
-## 画面の構成
+## 🛠 技術スタック
 
-トップだけはブラウザの通常スクロールを止め、フィルム面そのものを動かす画面にしています。個別ページ・固定ページ・検索0件・404 は通常の縦スクロールに戻しています。
+依存関係ファイルは無し。下表はソースと `style.css` から確認できたもの。
 
-- 背景は深紅（`#961111`）にテクスチャを敷いています。
-- 一覧の帯は幅 1340px、左右にフィルムの穴（`filmborder.png`）、中央にフィルム地（`filmbg.png`）です。帯全体を `-15deg` 回転させています。
-- 写真は 2 カラムのグリッドです。偶数番目だけ下に 225px ずらし、フィルム上で交互に並んでいるように見せています。
-- 画面幅 1024px 以下では 1 カラムにし、回転はそのまま、ずらしは解除します。
-- サムネイルは白枠とドロップシャドウを付け、ホバーで画像を 1.4 倍に拡大します。
-- サイト名は縦書きです。メニューはハンバーガーではなく、歩いているハンバーガーアイコンのシルエット（`Walkingburger.svg`）をボタンにしています。
+| 分類 | 技術 |
+|---|---|
+| 言語 | PHP（バージョン宣言なし）、JavaScript（フレームワークなし）、Sass（`css/style.scss`） |
+| フレームワーク / CMS | WordPress クラシックテーマ（対応バージョンの宣言なし。テーマ Version は 1.0） |
+| CSS | 読み込みは `css/reset.css`（destyle.css v4.0.1）と `css/style.css`。後者のクエリに `rand()` を付与 |
+| フォント | Google Fonts の Noto Sans JP、RocknRoll One（`header.php`） |
+| ページ送り | `footer.php` が `function_exists('wp_pagenavi')` のときだけ `wp_pagenavi()` を呼ぶ。プラグインの宣言ファイルは無し |
+| DB | 該当なし（テーマ内に接続設定なし） |
+| パッケージ管理 | 該当なし |
+| お問い合わせフォーム | 該当なし（`page-contact.php` は案内文のあと `the_content()`。フォームプラグインの指定は無し） |
 
-## 主な機能
+## 🚀 セットアップ
 
-### フィルム上の慣性スクロール
+`composer.json` / `package.json` が無いため、パッケージのインストール手順は該当なし。
 
-アーカイブページにおける慣性スクロールの実装は、Cursorを使ったAIエージェントが実装しています。
-<br><br>
-一覧の各 `.entry` は `position: relative` で、JavaScript が `top` を書き換えて動かします。ページ全体の `overflow` はトップでは `hidden` です。
+1. このディレクトリを WordPress の `wp-content/themes/photomamire_wp` に置く
+2. 管理画面「外観 → テーマ」で「写真まみれ」を有効化する
+3. スタイルの読み込み元は `functions.php`。編集対象は `css/style.scss`、enqueue 先は `css/style.css`
+4. TODO: Sass のコンパイルコマンド（ビルド定義ファイルが無い）
+5. TODO: 動作確認済みの PHP バージョンと WordPress バージョン
+6. 個別ページの EXIF 表示は PHP の `exif_read_data()` を使用。拡張の導入手順はリポジトリに記載なし
+7. ページ送りを出すには `wp_pagenavi()` を提供するプラグインが必要。未導入でも一覧自体は表示する（`function_exists` で分岐）
+8. ヘッダーのリンク先は `/profile/`、`/privacy/`、`/contact/`。対応テンプレート名は「プロフィール」「プライバシーポリシー」「お問い合わせ」
+9. 投稿はアイキャッチとタグを使用。一覧・ライトボックス・個別表示が参照する画像サイズは `custom-2000x2000`。EXIF 用に `full` も参照
+10. TODO: フロントを「最新の投稿」にする必要があるかは設定ファイルに記載なし（投稿一覧テンプレートは `home.php`）
 
-| 入力 | 動き |
-| --- | --- |
-| マウスホイール | `deltaY` を速度に加算 |
-| 矢印キー / PageUp・PageDown | 30px または 120px 分の速度を加算。フォームにフォーカスがあるときは無視 |
-| タッチ | 縦方向の移動が横より大きく、30px を超えたときだけスワイプとして扱う |
-
-速度には上限（±100）と摩擦（0.8）をかけ、`requestAnimationFrame` で減衰させています。逆方向の入力が入ったときは、溜まっていた速度を一度 0 に戻してから新しい方向へ乗せます。上下の端では `top` をクランプし、フィルムが無限に流れないようにしています。
-
-初回表示では、各サムネイルを 300ms 間隔で下からフェードインさせています（Web Animations API、500ms）。
-
-### ライトボックス
-
-サムネイルのリンクは通常遷移を止め、`#overlay` を開きます。画像の `data-url` と `data-taghtml` を読み、拡大写真・個別ページへのリンク・タグを重ねて表示します。
-
-閉じる操作は、閉じるボタン、または写真の外側（暗い背景）のクリックです。個別ページへ進む場合は、ライトボックス内の写真をクリックします。
-
-### タグ検索（AND / OR）
-
-サイドバーのフォームはトップ（`home_url()`）へ GET で送ります。
-
-- `filter_tag[]` … チェックされたタグのスラッグ
-- `condition` … `or` または `and`
-- `s` … 空文字。WordPress の検索クエリとして認識させつつ、キーワード検索は使わない
-
-`pre_get_posts` でメインクエリを書き換えます。
-
-- 投稿タイプは `post`、1ページあたり `24` 件
-- OR のときは `tag_slug__in`、それ以外は `tag_slug__and`
-- スラッグは `sanitize_title()` を通してからクエリに渡す
-- キーワード用の `s` は空に戻し、タグ条件だけが残るようにする
-
-検索結果が 0 件のときは、選んだタグを再表示した検索フォームと、最新写真6件を出します。タグアーカイブ（`/tag/スラッグ/`）では、そのタグにチェックが入った状態でサイドバーを開きます。
-
-フッターでは、検索中・タグアーカイブ中の件数と選択タグ、WP-PageNavi によるページ送りを固定表示します。
-
-### 個別ページの EXIF
-
-アイキャッチの元画像に対して `exif_read_data()` を呼び、次の項目を表にしています。キーが無い、または値が空の項目は「不明」と表示します。
-
-| 表示名 | 参照している EXIF |
-| --- | --- |
-| カメラモデル | `IFD0.Model` |
-| 撮影日時 | `EXIF.DateTimeOriginal` |
-| 横幅 / 高さ | `COMPUTED.Width` / `COMPUTED.Height` |
-| F値 | `COMPUTED.ApertureFNumber` |
-| シャッタースピード | `EXIF.ExposureTime` |
-| 露出補正 | `EXIF.ExposureBiasValue` |
-| ISO感度 | `EXIF.ISOSpeedRatings` |
-| 焦点距離 | `EXIF.FocalLengthIn35mmFilm`（35mm 判換算） |
-
-写真の向きは、生成済み画像の `getimagesize()` で幅と高さを比べ、横長なら `.landscape`、縦長なら `.portrait` を付けてレイアウトを分けています。
-
-写真の下の「コメント」は、投稿本文ではなく、アイキャッチに設定した添付ファイルの `post_content`（メディアの説明）を出しています。撮影メモをメディア側に書いておく運用です。
-
-### 画像サイズ
-
-WordPress 標準のサムネイル・中・大・`medium_large`・1536・2048 の自動生成は止めています。大きな原寸をさらに縮小して複製するしきい値（`big_image_size_threshold`）も無効です。代わりに次の2サイズだけ追加しています。
-
-| サイズ名 | 寸法 | クロップ | 用途 |
-| --- | --- | --- | --- |
-| `custom-360x360` | 360×360 | あり（中央トリミング） | 正方形サムネイル用に定義 |
-| `custom-2000x2000` | 長辺 2000px | なし（比率維持） | 一覧・ライトボックス・個別ページで表示しているサイズ |
-
-アイキャッチが無い投稿は `images/default_noimage.png` を出します。
-
-管理画面の投稿一覧には、先頭列の直後に「アイキャッチ」列を追加しています。160px 幅でサムネイルを出し、未設定は「—」です。
-
-### 固定ページ
-
-`body_class` に `page-{スラッグ}` を追加し、ページごとのスタイルを切り分けられるようにしています。
-
-| ファイル | テンプレート名 | 想定スラッグ |
-| --- | --- | --- |
-| `page-profile.php` | プロフィール | `profile` |
-| `page-contact.php` | お問い合わせ | `contact` |
-| `page-privacy.php` | プライバシーポリシー | `privacy` |
-| `page.php` | （デフォルト） | 上記以外の固定ページ。本文のみ表示 |
-
-プロフィールは、名前・居住地などの紹介と、Nikon D850 / D750 / D600 / D5100 の機材紹介をテンプレート内に持っています。お問い合わせは案内文のあとに `the_content()` を出し、フォーム本体は固定ページの編集画面で管理します。プライバシーポリシーは、取得する個人情報、写真への写り込み、アクセス解析、広告、コメント、著作権、免責をテンプレート内に記載しています。
-
-## テンプレートの対応
-
-WordPress のテンプレート階層に沿ってファイルを分けています。
-
-```text
-リクエスト
-    │
-    ├─ ブログトップ ───────── home.php
-    │                         └─ template/photocontent.php を 24 件
-    ├─ 検索 ──────────────── search.php
-    │     ├─ ヒットあり ────  template/photocontent.php
-    │     └─ 0 件 ────────── template/nosearchcontent.php
-    ├─ タグアーカイブ ─────── tag.php
-    │                         └─ template/photocontent.php
-    ├─ 個別投稿 ───────────── single.php（EXIF とコメント）
-    ├─ 固定ページ
-    │     ├─ スラッグ profile ─ page-profile.php
-    │     ├─ スラッグ contact ─ page-contact.php
-    │     ├─ スラッグ privacy ─ page-privacy.php
-    │     └─ それ以外 ──────── page.php
-    └─ 404 ───────────────── 404.php
-                              └─ template/404content.php
-
-共通: header.php（サイト名、サイドバー、タグフォーム）
-      footer.php（件数、ページ送り、ライトボックス）
-      functions.php（テーマサポート、クエリ、画像、管理画面）
-```
-
-`home.php` はメインクエリを使わず、独自の `WP_Query` で投稿を取っています。検索とタグアーカイブは `pre_get_posts` で書き換えたメインクエリを使います。ページ送りプラグインには、トップだけこの独自クエリを渡しています。
-
-## ディレクトリ
+## 📁 ディレクトリ構成
 
 ```text
 photomamire_wp/
-├── style.css                 テーマ宣言（Theme Name: 写真まみれ）
-├── functions.php             テーマの設定と検索クエリ
-├── header.php / footer.php   共通レイアウト
-├── home.php                  トップの写真一覧
-├── index.php                 最終フォールバック
-├── single.php                写真の個別ページ
-├── search.php                タグ検索結果
-├── tag.php                   タグアーカイブ
-├── page.php                  汎用の固定ページ
-├── page-profile.php          プロフィール
-├── page-contact.php          お問い合わせ
-├── page-privacy.php          プライバシーポリシー
-├── 404.php                   404
+├── style.css              テーマ宣言（Theme Name / Version のみ）
+├── functions.php          テーマサポート、画像サイズ、タグ検索クエリ、管理画面の列
+├── header.php             ヘッダー、サイドバー、タグ検索フォーム
+├── footer.php             件数、ページ送り、ライトボックス
+├── home.php               トップ一覧（WP_Query）
+├── index.php              最終フォールバック
+├── single.php             個別ページ（EXIF）
+├── search.php             タグ検索結果
+├── tag.php                タグアーカイブ
+├── page.php               汎用固定ページ
+├── page-profile.php       テンプレート名: プロフィール
+├── page-contact.php       テンプレート名: お問い合わせ
+├── page-privacy.php       テンプレート名: プライバシーポリシー
+├── 404.php
 ├── template/
-│   ├── photocontent.php      一覧の写真 1 枚
+│   ├── photocontent.php      一覧の写真 1 件
 │   ├── nosearchcontent.php   検索 0 件
-│   └── 404content.php        404 の本文
+│   └── 404content.php
 ├── css/
-│   ├── reset.css
-│   ├── style.scss            スタイルの編集元
-│   └── style.css             読み込んでいるコンパイル結果
+│   ├── reset.css          destyle.css v4.0.1
+│   ├── style.scss         スタイルの編集元
+│   └── style.css          読み込んでいる CSS
 ├── js/
-│   └── script.js             スクロール、ライトボックス、サイドバー
-├── images/                   フィルム地、カメラ写真、代替画像、メニューアイコン
+│   └── script.js          慣性スクロール、ライトボックス、サイドバー
+├── images/                フィルム地、機材写真、代替画像、メニューアイコン
 └── favicon.png
 ```
 
-## セットアップ
+## 🔗 デモ
 
-1. このディレクトリを `wp-content/themes/photomamire_wp` に置く。
-2. 管理画面の「外観 → テーマ」から「写真まみれ」を有効化する。
-3. 「設定 → 表示設定」で、フロントページを「最新の投稿」にする（`home.php` がトップになる）。
-4. 次の固定ページを作り、スラッグとテンプレートを合わせる。
+解析タグの読み込み先: [https://photo-mamire.jp/](https://photo-mamire.jp/)
 
-   | ページ | スラッグ | テンプレート |
-   | --- | --- | --- |
-   | プロフィール | `profile` | プロフィール |
-   | お問い合わせ | `contact` | お問い合わせ |
-   | プライバシーポリシー | `privacy` | プライバシーポリシー |
+TODO: リポジトリ内にデモ手順やスクリーンショットの配置は無し
 
-5. [WP-PageNavi](https://ja.wordpress.org/plugins/wp-pagenavi/) をインストールして有効化する。未導入でも一覧は出ますが、ページ送りは表示されません。
-6. PHP の EXIF 拡張（`exif_read_data`）を有効にする。無効だと個別ページの撮影情報は出せません。
-7. 投稿にアイキャッチ（JPEG）とタグを付ける。撮影メモは、アイキャッチ画像の「説明」に書くと個別ページのコメント欄に出ます。
-8. お問い合わせフォームは、Contact Form 7 などのプラグインで作り、`contact` 固定ページの本文にショートコードを置く。入力欄を `.contact_form` で包むと、テーマ側の幅・枠線・送信ボタンのスタイルが当たります。
+## 📝 今後の予定
 
-スタイルを直すときは `css/style.scss` を編集し、`css/style.css` へコンパイルします。テーマは `style.css`（テーマ宣言のみ）ではなく、`css/style.css` を読み込みます。キャッシュ避けのため、スタイルのクエリにはリクエストごとの乱数を付けています。
+該当なし
 
-```bash
-sass css/style.scss css/style.css
-```
+## 📄 ライセンス
 
-## デザインの決めごと
+テーマ全体の LICENSE ファイルは無し。該当なし。
 
-Sass の変数と、画面幅の切り替えは `css/style.scss` の先頭にまとめています。
-
-| 名前 | 値 | 用途 |
-| --- | --- | --- |
-| `$color-base` | `#111` | 本文色 |
-| `$background-base` | `#961111` | ページ背景、見出しのアクセント、ボタン |
-| `$font-family-ja` | Noto Sans JP | 本文 |
-| サイト名 | RocknRoll One | ヘッダーの「写真まみれ」のみ |
-| ブレークポイント `sp` | `max-width: 1024px` | 1 カラム化、余白と文字サイズの縮小 |
-
-タグの見た目（角丸・`#dd6c6c`）は mixin `tagbtn` にまとめ、ライトボックス・検索条件・フッターで共有しています。
-
-## 運用上の前提
-
-- 写真は「投稿」1件につきアイキャッチ1枚、という単位で扱っています。本文にギャラリーを並べる構成ではありません。
-- 検索はキーワードではなくタグ専用です。フォームの検索文字列は常に空にしています。
-- 一覧・ライトボックス・個別ページが表示に使うのは `custom-2000x2000` です。原寸（`full`）は EXIF を読むためだけに参照しています。
-- アクセス解析のタグを `header.php` に直書きしています（公開サイト向け）。別環境へ置く場合は、この 1 行を環境に合わせて外してください。
-
-## ライセンス
-
-テーマのコードは、このリポジトリの公開範囲に従って利用できます。
-
-サイトに掲載している写真の著作権は撮影者にあります。テーマの動作確認以外の目的で、これらの画像を再利用する場合は、公開サイトのお問い合わせから連絡してください。
+`css/reset.css` のみ、ファイル先頭で destyle.css v4.0.1 / MIT License と記載。
