@@ -96,13 +96,12 @@ photomamire_wp/
 
 ## 🔗 デモ
 
-解析タグの読み込み先: [https://photo-mamire.jp/](https://photo-mamire.jp/)
-
-TODO: リポジトリ内にデモ手順やスクリーンショットの配置は無し
+- 公開サイト：[https://photo-mamire.jp/](https://photo-mamire.jp/)
+- リポジトリ：[https://github.com/corekaraweb/photomamire_wp](https://github.com/corekaraweb/photomamire_wp)
 
 ## 📝 今後の予定
 
-該当なし
+- `docs/screenshot.png` の追加（テンプレート用パス。現状ファイルなし）
 
 ## 📄 ライセンス
 
