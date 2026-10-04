@@ -27,7 +27,12 @@
   ?>
   <?php wp_head(); ?>
   <script src="<?php echo get_template_directory_uri() ?>/js/script.js" defer></script>
-  <script async src="https://photo-mamire.jp/cgi-bin/lunalys3/analyzer/tracker.js" id="lunalys" data-site="1"></script>
+  <?php
+    $domain = $_SERVER['HTTP_HOST'];
+    if ($domain === 'photo-mamire.jp') { 
+  ?>
+    <script async src="https://photo-mamire.jp/cgi-bin/lunalys3/analyzer/tracker.js" id="lunalys" data-site="1"></script>
+  <?php } ?>
 </head>
 <body <?php body_class(); ?>>
 <?php
