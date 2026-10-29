@@ -258,6 +258,7 @@
         let overlayImg = overlay.querySelector(".photo_inner img");
         let overlayTags = overlay.querySelector(".photo_inner .taglist");
         let overlayUrl = overlay.querySelector(".photo_inner .single");
+        let overlayDetail = overlay.querySelector(".photo_inner .detail");
 
         let imgElem = currentAnchor.querySelector("img");
 
@@ -270,6 +271,7 @@
         if (overlayImg && imgSrc && overlayTags) {
           overlayImg.src = imgSrc;
           overlayUrl.href = dataurl;
+          overlayDetail.href = dataurl;
           overlayTags.innerHTML = datatagtxt;
         }
         overlay.classList.add("is-open");

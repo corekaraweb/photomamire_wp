@@ -63,6 +63,7 @@ if (is_tag()) {
         <div class="top">
           <p class="title"></p>
         </div>
+        <a href="" class="detail">詳細を見る &gt;&gt;</a>
         <span class="close">×</span>
         <a class="single" href=""><img src="" alt=""></a>
         <div class="bottom">
