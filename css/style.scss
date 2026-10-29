@@ -511,15 +511,19 @@ body.error404 {
         border-bottom: 1px solid #aaa;
         margin: 60px auto 30px;
         padding-bottom: 5px;
+        @include mq(sp) {
+          flex-direction: column;
+          gap: 5px;
+        }
         h2.title {
           border: none;
-          text-align: center;
+          text-align: left;
           font-size: 22px;
           margin: 0;
           color: #000;
           line-height: 1;
           @include mq(sp) {
-            font-size: 14px;
+            font-size: 16px;
           }
         }
         .date {

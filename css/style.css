@@ -557,12 +557,21 @@ body.error404 .photolist .entry_body .meta {
   margin: 60px auto 30px;
   padding-bottom: 5px;
 }
+@media screen and (max-width: 1024px) {
+  body.single .photolist .entry_body .meta,
+  body.page .photolist .entry_body .meta,
+  body.search-no-results .photolist .entry_body .meta,
+  body.error404 .photolist .entry_body .meta {
+    flex-direction: column;
+    gap: 5px;
+  }
+}
 body.single .photolist .entry_body .meta h2.title,
 body.page .photolist .entry_body .meta h2.title,
 body.search-no-results .photolist .entry_body .meta h2.title,
 body.error404 .photolist .entry_body .meta h2.title {
   border: none;
-  text-align: center;
+  text-align: left;
   font-size: 22px;
   margin: 0;
   color: #000;
@@ -573,7 +582,7 @@ body.error404 .photolist .entry_body .meta h2.title {
   body.page .photolist .entry_body .meta h2.title,
   body.search-no-results .photolist .entry_body .meta h2.title,
   body.error404 .photolist .entry_body .meta h2.title {
-    font-size: 14px;
+    font-size: 16px;
   }
 }
 body.single .photolist .entry_body .meta .date,
