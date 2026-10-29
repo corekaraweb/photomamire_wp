@@ -482,8 +482,10 @@ body.search {
     height: auto;
   }
 }
-.contents_inner .entry .entry_inner a:hover img {
-  transform: scale(1.4);
+@media screen and (min-width:1025px) {
+  .contents_inner .entry .entry_inner a:hover img {
+    transform: scale(1.4);
+  }
 }
 .contents_inner .entry .entry_body p {
   line-height: 2;

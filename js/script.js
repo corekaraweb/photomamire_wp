@@ -141,14 +141,17 @@
     let i = 0;
     entriesIn.forEach((entry) => {
       i++;
-      const keyframes = {
-        opacity: [0, 1],
-        transform: ["translateY(50px)", "translateY(0px)"],
-      };
+      if (getColumnCount() == 1.0) {
+        i = 0;
+      }
       const options = {
         duration: 500,
         delay: i * 300,
         fill: "forwards",
+      };
+      const keyframes = {
+        opacity: [0, 1],
+        transform: ["translateY(50px)", "translateY(0px)"],
       };
       entry.animate(keyframes, options);
     });
