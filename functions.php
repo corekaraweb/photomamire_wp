@@ -1,6 +1,6 @@
 <?php
 // 1ページ当たりに表示する写真の数
-$POSTPERPAGE = 24;
+$POSTPERPAGE = 12;
 // 写真表示のインターバル
 $PHOTOINTERVAL = 500;
 // 写真を表示させるアニメーション時間
