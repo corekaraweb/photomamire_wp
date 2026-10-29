@@ -16,10 +16,9 @@ if (is_search()) {
         $tag_names[] = $tag->name;
       } else {
         $tag_html .= '<span>#' . $slug . '</span>';
-        $tag_names[] = urldecode($slug); // fallback in case not found
+        $tag_names[] = urldecode($slug); 
       }
     }
-    // $taglist .= implode(', ', $tag_names);
     $taglist = $tag_html;
   } elseif (isset($_GET['filter_tag'])) { // 万が一単一値で渡ってきた場合
     $tag_slug = urldecode($_GET['filter_tag']);

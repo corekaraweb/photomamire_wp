@@ -49,31 +49,31 @@
                 $exif_hosei = '不明';
                 $exif_iso  = '不明';
                 $exif_shyouten = '不明';
-                if (isset($exif["IFD0"]["Model"])) { //配列キーに値が存在するか確認します
+                if (isset($exif["IFD0"]["Model"])) {
                   $exif_model = $exif["IFD0"]["Model"] ?: "不明"; // カメラモデル
                 }
-                if (isset($exif["EXIF"]["DateTimeOriginal"])) { //配列キーに値が存在するか確認します
+                if (isset($exif["EXIF"]["DateTimeOriginal"])) {
                   $exif_date = $exif["EXIF"]["DateTimeOriginal"] ?: "不明"; // 撮影日時
                 }
-                if (isset($exif["COMPUTED"]["Height"])) { //配列キーに値が存在するか確認します
+                if (isset($exif["COMPUTED"]["Height"])) {
                   $exif_height = $exif["COMPUTED"]["Height"] . ' px' ?: "不明"; //写真の高さ
                 }
-                if (isset($exif["COMPUTED"]["Width"])) { //配列キーに値が存在するか確認します
+                if (isset($exif["COMPUTED"]["Width"])) {
                   $exif_width = $exif["COMPUTED"]["Width"] . ' px' ?: "不明";  //写真の横幅
                 }
-                if (isset($exif["COMPUTED"]["ApertureFNumber"])) { //配列キーに値が存在するか確認します
+                if (isset($exif["COMPUTED"]["ApertureFNumber"])) {
                   $exif_shibori = $exif["COMPUTED"]["ApertureFNumber"] ?: "不明"; // F値
                 }
-                if (isset($exif["EXIF"]["ExposureTime"])) { //配列キーに値が存在するか確認します
+                if (isset($exif["EXIF"]["ExposureTime"])) {
                   $exif_roshutsu = $exif["EXIF"]["ExposureTime"] ?: "不明"; // 露出時間（シャッタースピード）
                 }
-                if (isset($exif["EXIF"]["ExposureBiasValue"])) { //配列キーに値が存在するか確認します
+                if (isset($exif["EXIF"]["ExposureBiasValue"])) {
                   $exif_hosei = $exif["EXIF"]["ExposureBiasValue"] ?: "不明"; // 露出補正
                 }
-                if (isset($exif["EXIF"]["ISOSpeedRatings"])) { //配列キーに値が存在するか確認します
+                if (isset($exif["EXIF"]["ISOSpeedRatings"])) {
                   $exif_iso = $exif["EXIF"]["ISOSpeedRatings"] ?: "不明"; // ISO
                 }
-                if (isset($exif["EXIF"]["FocalLengthIn35mmFilm"])) { //配列キーに値が存在するか確認します
+                if (isset($exif["EXIF"]["FocalLengthIn35mmFilm"])) {
                   $exif_shyouten = $exif["EXIF"]["FocalLengthIn35mmFilm"] . ' mm'; // 焦点距離
                 }
                 ?>
@@ -121,8 +121,8 @@
                   </div>
                   <div class="photo_comment">
                     <h2>AIコメント</h2>
-                    <?php 
-                    $thumbnail_description = get_post( $thumbnail_id )->post_content;
+                    <?php
+                    $thumbnail_description = get_post($thumbnail_id)->post_content;
                     echo $thumbnail_description;
                     ?>
                   </div>

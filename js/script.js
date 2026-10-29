@@ -1,28 +1,4 @@
 (function () {
-  // // 初期化
-  // let lastY = 0;
-  // let entryHeight;
-  // let entriesElement;
-  // let entries;
-  // let tops;
-
-  // // 慣性スクロール用の状態
-  // let velocity = 70;
-  // let animating = false;
-  // const friction = 0.8; // 1に近いほど慣性が長く続く
-  // const maxVelocity = 100; // 一度のホイール操作で乗る最大速度
-
-  // // タップ時の誤動作を防ぐためのスワイプ時の処理を実行しない最小距離
-  // const minimumDistance = 30;
-  // // スワイプ開始時の座標
-  // let startX = 0;
-  // let startY = 0;
-  // // スワイプ終了時の座標
-  // let endX = 0;
-  // let endY = 0;
-  // // スワイプ終端で慣性に渡す直近の移動量
-  // let lastSwipeDeltaY = 30;
-
   // 画面幅に応じてカラム数を返す関数
   const getColumnCount = () => (window.innerWidth <= 1024 ? 1.0 : 2.0); // 画面幅が1024px以下なら1（ワンカラム）
 
