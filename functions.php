@@ -16,6 +16,10 @@ add_theme_support('respnsive-embeds');
 // 幅広・全幅のスタイルに適応させる
 add_theme_support('align-wide');
 
+// 高さ360px 幅360pxの新しい画像サイズを定義
+add_image_size('custom-360x360', 360, 360, true);
+add_image_size('custom-2000x2000', 2000, 2000, false);
+
 // body_classに固定ページのスラッグを追加
 function pagename_class($classes = '')
 {
@@ -50,12 +54,7 @@ function disable_image_sizes($new_sizes)
 add_filter('intermediate_image_sizes_advanced', 'disable_image_sizes');
 add_filter('big_image_size_threshold', '__return_false');
 
-// 高さ360px 幅360pxの新しい画像サイズを定義
-add_image_size('custom-360x360', 360, 360, true);
-add_image_size('custom-2000x2000', 2000, 2000, false);
 
-// すべてのアイキャッチ画像の有効化
-add_theme_support('post-thumbnails');
 
 // 投稿一覧(管理画面)にアイキャッチ画像のカラムを追加＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 // カラムを追加
