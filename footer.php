@@ -16,7 +16,7 @@ if (is_search()) {
         $tag_names[] = $tag->name;
       } else {
         $tag_html .= '<span>#' . $slug . '</span>';
-        $tag_names[] = urldecode($slug); 
+        $tag_names[] = urldecode($slug);
       }
     }
     $taglist = $tag_html;
@@ -73,12 +73,14 @@ if (is_tag()) {
   </div>
 </div>
 <script>
-  // 初期化
   let lastY = 0;
   let entryHeight;
   let entriesElement;
   let entries;
   let tops;
+
+  // 写真一覧表示
+  let photoDelay = <?php echo my_get_photo_delay(); ?>
 
   // 慣性スクロール用の状態
   let velocity = 70;

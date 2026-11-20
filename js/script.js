@@ -122,7 +122,7 @@
       }
       const options = {
         duration: 500,
-        delay: i * 300,
+        delay: i * photoDelay,
         fill: "forwards",
       };
       const keyframes = {

@@ -1,6 +1,6 @@
 <?php
 // 1ページ当たりに表示する写真の数
-$POSTPERPAGE = 12;
+$POSTPERPAGE = my_get_post_per_page();
 // 写真表示のインターバル
 $PHOTOINTERVAL = 500;
 // 写真を表示させるアニメーション時間
@@ -19,6 +19,91 @@ add_theme_support('align-wide');
 // 高さ360px 幅360pxの新しい画像サイズを定義
 add_image_size('custom-360x360', 360, 360, true);
 add_image_size('custom-2000x2000', 2000, 2000, false);
+
+// テーマカスタマイザーの追加
+function my_customize($wp_customize)
+{
+  $wp_customize->add_panel(
+    'my_panel',
+    array(
+      'title'    => '写真まみれカスタマイズ',
+      'priority' => 1,
+    )
+  );
+
+  $wp_customize->add_section(
+    'my_section',
+    array(
+      'title'    => '投稿の設定',
+      'panel'    => 'my_panel',
+      'priority' => 1,
+    )
+  );
+
+  // 1ページあたりに表示する写真数
+  $wp_customize->add_setting(
+    'my_post_per_page',
+    array(
+      'default'           => 10,
+      'sanitize_callback' => 'absint', // 正の整数に変換して保存
+      'transport'         => 'postMessage', // 再読み込みしない
+    )
+  );
+  $wp_customize->add_control(
+    new WP_Customize_Control(
+      $wp_customize,
+      'post_per_page',
+      array(
+        'label'       => '1ページあたりの写真数',
+        'section'     => 'my_section',
+        'settings'    => 'my_post_per_page',
+        'priority'    => 1,
+        'type'        => 'number',
+        'input_attrs' => array(
+          'min'  => 1,
+          'step' => 1,
+        ),
+      )
+    )
+  );
+
+  // 写真表示時のディレイ
+  $wp_customize->add_setting(
+    'my_photo_delay',
+    array(
+      'default'           => 300,
+      'sanitize_callback' => 'absint', // 正の整数に変換して保存
+      'transport'         => 'postMessage', // 再読み込みしない
+    )
+  );
+  $wp_customize->add_control(
+    new WP_Customize_Control(
+      $wp_customize,
+      'photo_delay',
+      array(
+        'label'       => '写真表示時のディレイ',
+        'section'     => 'my_section',
+        'settings'    => 'my_photo_delay',
+        'priority'    => 1,
+        'type'        => 'number',
+        'input_attrs' => array(
+          'min'  => 100,
+          'step' => 100,
+        ),
+      )
+    )
+  );
+}
+add_action('customize_register', 'my_customize');
+
+function my_get_post_per_page()
+{
+  return (int) get_theme_mod('my_post_per_page', 10);
+}
+function my_get_photo_delay()
+{
+  return (int) get_theme_mod('my_photo_delay', 10);
+}
 
 // body_classに固定ページのスラッグを追加
 function pagename_class($classes = '')
@@ -53,8 +138,6 @@ function disable_image_sizes($new_sizes)
 }
 add_filter('intermediate_image_sizes_advanced', 'disable_image_sizes');
 add_filter('big_image_size_threshold', '__return_false');
-
-
 
 // 投稿一覧(管理画面)にアイキャッチ画像のカラムを追加＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 // カラムを追加
@@ -92,33 +175,37 @@ add_action('admin_head', 'posts_columns_thumbnail_style');
 
 function custom_search_query($query)
 {
-  if ((!is_admin() && $query->is_main_query()) && (($query->is_search()) || ($query->is_tag()))) {
-    global $POSTPERPAGE;
-    $paged = get_query_var('paged') ? get_query_var('paged') : 1;
-
-    // タグによる絞り込み検索を適切に処理
-    $selected_tags = array();
-    if (isset($_GET['filter_tag'])) {
-      if (is_array($_GET['filter_tag'])) {
-        foreach ($_GET['filter_tag'] as $tag_slug) {
-          if (!empty($tag_slug)) {
-            $selected_tags[] = sanitize_title($tag_slug);
-          }
-        }
-      } elseif (!empty($_GET['filter_tag'])) {
-        $selected_tags[] = sanitize_title($_GET['filter_tag']);
-      }
-    }
-    $query->set('post_type', 'post');
+  global $POSTPERPAGE;
+  if (!is_admin() && $query->is_main_query()) {
+    // 写真の表示数を設定
     $query->set('posts_per_page', $POSTPERPAGE);
-    $query->set('paged', $paged);
-    $query->set('s', '');
-    if (!empty($selected_tags)) {
-      $condition = $_GET['condition'];
-      if ($condition == 'or') {
-        $query->set('tag_slug__in', $selected_tags);
-      } else {
-        $query->set('tag_slug__and', $selected_tags);
+    if ($query->is_search() || ($query->is_tag())) {
+      // 検索結果またはタグアーカイブ
+      $paged = get_query_var('paged') ? get_query_var('paged') : 1;
+      // タグによる絞り込み検索を適切に処理
+      $selected_tags = array();
+      if (isset($_GET['filter_tag'])) {
+        if (is_array($_GET['filter_tag'])) {
+          foreach ($_GET['filter_tag'] as $tag_slug) {
+            if (!empty($tag_slug)) {
+              $selected_tags[] = sanitize_title($tag_slug);
+            }
+          }
+        } elseif (!empty($_GET['filter_tag'])) {
+          $selected_tags[] = sanitize_title($_GET['filter_tag']);
+        }
+      }
+      $query->set('post_type', 'post');
+      $query->set('posts_per_page', $POSTPERPAGE);
+      $query->set('paged', $paged);
+      $query->set('s', '');
+      if (!empty($selected_tags)) {
+        $condition = $_GET['condition'];
+        if ($condition == 'or') {
+          $query->set('tag_slug__in', $selected_tags);
+        } else {
+          $query->set('tag_slug__and', $selected_tags);
+        }
       }
     }
   }
