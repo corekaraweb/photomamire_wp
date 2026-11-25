@@ -121,7 +121,7 @@
         i = 0;
       }
       const options = {
-        duration: 500,
+        duration: photoInterval,
         delay: i * photoDelay,
         fill: "forwards",
       };

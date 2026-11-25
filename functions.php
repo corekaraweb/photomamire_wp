@@ -1,24 +1,24 @@
 <?php
 // 1ページ当たりに表示する写真の数
 $POSTPERPAGE = my_get_post_per_page();
-// 写真表示のインターバル
-$PHOTOINTERVAL = 500;
-// 写真を表示させるアニメーション時間
-$PHOTODURATION = 400;
-$PHOTODURATION_CSS = '0.4s';
 
-// すべてのアイキャッチ画像の有効化
-add_theme_support('post-thumbnails');
-// ブロック用CSSを有効化する
-add_theme_support('wp-block-styles');
-// 埋め込み要素のレスポンシブスタイルを適用
-add_theme_support('respnsive-embeds');
-// 幅広・全幅のスタイルに適応させる
-add_theme_support('align-wide');
+function my_theme_setup()
+{
+  // すべてのアイキャッチ画像の有効化
+  add_theme_support('post-thumbnails');
+  // ブロック用CSSを有効化する
+  add_theme_support('wp-block-styles');
+  // 埋め込み要素のレスポンシブスタイルを適用
+  add_theme_support('respnsive-embeds');
+  // 幅広・全幅のスタイルに適応させる
+  add_theme_support('align-wide');
 
-// 高さ360px 幅360pxの新しい画像サイズを定義
-add_image_size('custom-360x360', 360, 360, true);
-add_image_size('custom-2000x2000', 2000, 2000, false);
+  // 高さ360px 幅360pxの新しい画像サイズを定義
+  add_image_size('custom-360x360', 360, 360, true);
+  add_image_size('custom-2000x2000', 2000, 2000, false);
+}
+add_action('after_setup_theme', 'my_theme_setup');
+
 
 // テーマカスタマイザーの追加
 function my_customize($wp_customize)
@@ -44,9 +44,9 @@ function my_customize($wp_customize)
   $wp_customize->add_setting(
     'my_post_per_page',
     array(
-      'default'           => 10,
-      'sanitize_callback' => 'absint', // 正の整数に変換して保存
-      'transport'         => 'postMessage', // 再読み込みしない
+      'default'           => 16,
+      'sanitize_callback' => 'absint',
+      'transport'         => 'postMessage',
     )
   );
   $wp_customize->add_control(
@@ -67,13 +67,13 @@ function my_customize($wp_customize)
     )
   );
 
-  // 写真表示時のディレイ
+  // 写真表示時のディレイ =====================================================
   $wp_customize->add_setting(
     'my_photo_delay',
     array(
       'default'           => 300,
-      'sanitize_callback' => 'absint', // 正の整数に変換して保存
-      'transport'         => 'postMessage', // 再読み込みしない
+      'sanitize_callback' => 'absint',
+      'transport'         => 'postMessage',
     )
   );
   $wp_customize->add_control(
@@ -93,16 +93,47 @@ function my_customize($wp_customize)
       )
     )
   );
+
+  // 写真表示時のインターバル =====================================================
+  $wp_customize->add_setting(
+    'my_photo_interval',
+    array(
+      'default'           => 500,
+      'sanitize_callback' => 'absint',
+      'transport'         => 'postMessage',
+    )
+  );
+  $wp_customize->add_control(
+    new WP_Customize_Control(
+      $wp_customize,
+      'photo_interval',
+      array(
+        'label'       => '写真表示時のインターバル',
+        'section'     => 'my_section',
+        'settings'    => 'my_photo_interval',
+        'priority'    => 1,
+        'type'        => 'number',
+        'input_attrs' => array(
+          'min'  => 100,
+          'step' => 100,
+        ),
+      )
+    )
+  );
 }
 add_action('customize_register', 'my_customize');
 
 function my_get_post_per_page()
 {
-  return (int) get_theme_mod('my_post_per_page', 10);
+  return (int) get_theme_mod('my_post_per_page', 16);
 }
 function my_get_photo_delay()
 {
-  return (int) get_theme_mod('my_photo_delay', 10);
+  return (int) get_theme_mod('my_photo_delay', 300);
+}
+function my_get_photo_interval()
+{
+  return (int) get_theme_mod('my_photo_interval', 500);
 }
 
 // body_classに固定ページのスラッグを追加
@@ -122,6 +153,7 @@ function theme_enqueue_styles()
   $random_version = rand();
   wp_enqueue_style('reset', get_template_directory_uri() . '/css/reset.css', array(), null);
   wp_enqueue_style('style', get_template_directory_uri() . '/css/style.css', array(), $random_version);
+  wp_enqueue_script('my-theme-script', get_template_directory_uri() . '/js/script.js', array(), $random_version, array('in_footer' => true, 'strategy' => 'defer',));
 }
 add_action('wp_enqueue_scripts', 'theme_enqueue_styles');
 

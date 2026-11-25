@@ -23,11 +23,10 @@
   } else if (is_single() || is_page()) {
     $title = get_the_title() . "：" . get_bloginfo('name');
   } else {
-    $title = '写真まみれ | 奈良を拠点に活動しているアマチュア写真家のブログです。';
+    $title = get_bloginfo('name') . ' | ' . get_bloginfo('description');
   }
   ?>
   <?php wp_head(); ?>
-  <script src="<?php echo get_template_directory_uri() ?>/js/script.js" defer></script>
   <?php
   $domain = $_SERVER['HTTP_HOST'];
   if ($domain === 'photo-mamire.jp') {
