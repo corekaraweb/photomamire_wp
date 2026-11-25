@@ -19,7 +19,6 @@ function my_theme_setup()
 }
 add_action('after_setup_theme', 'my_theme_setup');
 
-
 // テーマカスタマイザーの追加
 function my_customize($wp_customize)
 {
@@ -67,7 +66,7 @@ function my_customize($wp_customize)
     )
   );
 
-  // 写真表示時のディレイ =====================================================
+  // 写真表示アニメーションの間隔 =====================================================
   $wp_customize->add_setting(
     'my_photo_delay',
     array(
@@ -81,7 +80,7 @@ function my_customize($wp_customize)
       $wp_customize,
       'photo_delay',
       array(
-        'label'       => '写真表示時のディレイ',
+        'label'       => '写真表示アニメーションの間隔',
         'section'     => 'my_section',
         'settings'    => 'my_photo_delay',
         'priority'    => 1,
@@ -94,7 +93,7 @@ function my_customize($wp_customize)
     )
   );
 
-  // 写真表示時のインターバル =====================================================
+  // 写真表示アニメーションの時間  =====================================================
   $wp_customize->add_setting(
     'my_photo_interval',
     array(
@@ -108,7 +107,7 @@ function my_customize($wp_customize)
       $wp_customize,
       'photo_interval',
       array(
-        'label'       => '写真表示時のインターバル',
+        'label'       => '写真表示アニメーションの時間 ',
         'section'     => 'my_section',
         'settings'    => 'my_photo_interval',
         'priority'    => 1,
