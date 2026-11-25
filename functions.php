@@ -227,7 +227,6 @@ function custom_search_query($query)
         }
       }
       $query->set('post_type', 'post');
-      $query->set('posts_per_page', $POSTPERPAGE);
       $query->set('paged', $paged);
       $query->set('s', '');
       if (!empty($selected_tags)) {
