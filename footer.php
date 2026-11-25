@@ -80,7 +80,8 @@ if (is_tag()) {
   let tops;
 
   // 写真一覧表示
-  let photoDelay = <?php echo my_get_photo_delay(); ?>
+  let photoDelay = <?php echo my_get_photo_delay(); ?>;
+  let photoInterval = <?php echo my_get_photo_interval(); ?>;
 
   // 慣性スクロール用の状態
   let velocity = 70;
